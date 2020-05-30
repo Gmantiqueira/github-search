@@ -50,70 +50,70 @@ export default createGlobalStyle`
     /* Utils */
 
     .text-gray-dark {
-        color: ${$grayDark};
+        color: ${$grayDark()};
     }
     .text-gray {
-        color: ${$gray};
+        color: ${$gray()};
     }
     .text-gray-light {
-        color: ${$grayLight};
+        color: ${$grayLight()};
     }
     .text-blue {
-        color: ${$blue};
+        color: ${$blue()};
     }
     .text-blue-light {
-        color: ${$blueLight};
+        color: ${$blueLight()};
     }
     .text-yellow {
-        color: ${$yellow};
+        color: ${$yellow()};
     }
     .text-yellow-light {
-        color: ${$yellowLight};
+        color: ${$yellowLight()};
     }
     .text-green {
-        color: ${$green};
+        color: ${$green()};
     }
     .text-green-light {
-        color: ${$greenLight};
+        color: ${$greenLight()};
     }
     .text-red {
-        color: ${$red};
+        color: ${$red()};
     }
     .text-red-light {
-        color: ${$redLight};
+        color: ${$redLight()};
     }
 
     .bg-gray-dark {
-        background: ${$grayDark};
+        background: ${$grayDark()};
     }
     .bg-gray {
-        background: ${$gray};
+        background: ${$gray()};
     }
     .bg-gray-light {
-        background: ${$grayLight};
+        background: ${$grayLight()};
     }
     .bg-blue {
-        background: ${$blue};
+        background: ${$blue()};
     }
     .bg-blue-light {
-        background: ${$blueLight};
+        background: ${$blueLight()};
     }
     .bg-yellow {
-        background: ${$yellow};
+        background: ${$yellow()};
     }
     .bg-yellow-light {
-        background: ${$yellowLight};
+        background: ${$yellowLight()};
     }
     .bg-green {
-        background: ${$green};
+        background: ${$green()};
     }
     .bg-green-light {
-        background: ${$greenLight};
+        background: ${$greenLight()};
     }
     .bg-red {
-        background: ${$red};
+        background: ${$red()};
     }
     .bg-red-light {
-        background: ${$redLight};
+        background: ${$redLight()};
     }
 `;
