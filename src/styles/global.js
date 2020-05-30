@@ -47,6 +47,22 @@ export default createGlobalStyle`
         outline: 0;
     }
 
+    h1 {
+        font-size: 48px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
     /* Utils */
 
     .text-gray-dark {
