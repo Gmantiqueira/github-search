@@ -25,10 +25,16 @@ export default createGlobalStyle`
         outline: 0;
     }
     html, body, #root {
+        display: flex;
+        flex-direction: column;
         height: 100%;
         min-height: 100%;
     }
+    #root {
+        flex: 1;
+    }
     body {
+        color: ${$grayDark()};
         -webkit-font-smoothing: antialiased;
     }
     body, input, button {
@@ -48,15 +54,24 @@ export default createGlobalStyle`
     }
 
     h1 {
-        font-size: 48px;
+        font-size: 40px;
+        @media screen and (min-width: 992px) {
+            font-size: 48px;
+        }
     }
 
     h2 {
-        font-size: 32px;
+        font-size: 26px;
+        @media screen and (min-width: 992px) {
+            font-size: 32px;
+        }
     }
 
     h3 {
-        font-size: 24px;
+        font-size: 22px;
+        @media screen and (min-width: 992px) {
+            font-size: 24px;
+        }
     }
 
     p {
@@ -64,6 +79,22 @@ export default createGlobalStyle`
     }
 
     /* Utils */
+
+    .center {
+        text-align: center;
+    }
+
+    .regular {
+        font-weight: 400;
+    }
+
+    .medium {
+        font-weight: 500;
+    }
+
+    .bold {
+        font-weight: 700;
+    }
 
     .text-gray-dark {
         color: ${$grayDark()};
@@ -132,4 +163,5 @@ export default createGlobalStyle`
     .bg-red-light {
         background: ${$redLight()};
     }
+
 `;
