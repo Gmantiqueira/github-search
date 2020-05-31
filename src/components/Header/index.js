@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <Container className="bg-blue">
+        <Container className="bg-gray-dark">
             <Link to="/">
                 <h1 className="text-blue-light">GitHub Search</h1>
             </Link>
