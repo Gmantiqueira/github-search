@@ -17,7 +17,6 @@ export const BlueLine = styled.span`
 
 export const CardWrapper = styled.div`
     border-radius: 8px;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     margin: 0 0 64px;
@@ -25,16 +24,8 @@ export const CardWrapper = styled.div`
     padding: 24px;
     width: 100%;
 
-    transform: scale(1);
-    transition: transform ease 0.2s;
-
     @media screen and (min-width: 992px) {
         margin: 0 32px 64px;
-    }
-
-    &:hover {
-        transform: scale(1.05);
-        transition: transform ease 0.2s;
     }
 
     .image-wrapper {

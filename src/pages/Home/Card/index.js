@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
-import DataCount from '../DataCount';
+import DataCount from '@/components/DataCount';
 
 import { Action, BlueLine, CardWrapper, Numbers } from './styles';
 
