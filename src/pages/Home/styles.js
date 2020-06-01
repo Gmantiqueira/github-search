@@ -48,4 +48,10 @@ export const UsersList = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
+    > div {
+        margin: 0 0 64px;
+        @media screen and (min-width: 992px) {
+            margin: 0 32px 64px;
+        }
+    }
 `;

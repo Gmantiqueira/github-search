@@ -1,16 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 import api from '@/services/api';
 
-import Card from '@/components/Card';
+import Card from './Card';
 import Loader from '@/components/Loader';
 
 import { Container, InputWrapper, SearchInput, UsersList } from './styles';
 
 function Home() {
-    const [search, setSearch] = useState('');
-    const [loading, setLoading] = useState(false);
     const [hasTyped, triggerTyped] = useState(false);
+    const [loadingPages, setLoadingPages] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
 
     const debounceSearch = useDebounce(search, 1000);
@@ -18,19 +20,26 @@ function Home() {
     const getUsers = useCallback(async () => {
         try {
             const { data } = await api.get('search/users', {
-                params: { q: search },
+                params: { q: search, page, per_page: 12 },
             });
 
-            setUsers(data.items);
+            if (page === 1) {
+                setUsers(users);
+            } else {
+                setUsers([...users, data.items]);
+            }
+
+            setLoadingPages(false);
             setLoading(false);
         } catch (err) {
+            setLoadingPages(false);
             setLoading(false);
         }
-    }, [search]);
+    }, [page, search]);
 
     function searchHandler(value) {
         triggerTyped(true);
-        // setSearch(value);
+        setSearch(value);
     }
 
     useEffect(() => {
@@ -42,8 +51,28 @@ function Home() {
         }
     }, [debounceSearch, getUsers]);
 
+    const infiniteScroll = useRef();
+
+    useEffect(() => {
+        if (infiniteScroll.current) {
+            infiniteScroll.current.addEventListener(
+                'scroll',
+                async function () {
+                    if (
+                        this.scrollTop + this.clientHeight >=
+                            this.scrollHeight &&
+                        !loadingPages
+                    ) {
+                        setLoadingPages(true);
+                        setPage((old) => old + 1);
+                    }
+                }
+            );
+        }
+    }, [loadingPages]);
+
     return (
-        <Container className="bg-gray-dark">
+        <Container ref={infiniteScroll} className="bg-gray-dark">
             <InputWrapper isSearching={hasTyped}>
                 <SearchInput
                     type="text"
@@ -52,8 +81,13 @@ function Home() {
                 />
             </InputWrapper>
             <UsersList>
-                <Loader />
+                {loading ? (
+                    <Loader />
+                ) : (
+                    users.map((user) => <Card user={user} />)
+                )}
             </UsersList>
+            {loadingPages && <Loader />}
         </Container>
     );
 }
