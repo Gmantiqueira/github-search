@@ -6,12 +6,8 @@ import {
     $grayLight,
     $blue,
     $blueLight,
-    $yellow,
-    $yellowLight,
     $red,
     $redLight,
-    $green,
-    $greenLight,
 } from './colors';
 
 export default createGlobalStyle`
@@ -47,10 +43,28 @@ export default createGlobalStyle`
         list-style: none;
     }
     button {
-        color: #FFF;
-        border: 0;
+        background-color: ${$blue()};
+        color: ${$blueLight()};
         cursor: pointer;
+
+        align-items: center;
+        border-radius: 8px;
+        display: flex;
+
+        border: 1px solid transparent;
+        height: 40px;
         outline: 0;
+        padding: 0 16px;
+
+        transition: all ease-out .2s;
+
+        &:hover {
+            background-color: ${$blueLight()};
+            border-color: ${$blue()};
+            color: ${$blue()};
+
+            transition: all ease-out .2s;
+        }
     }
 
     h1 {
@@ -111,18 +125,6 @@ export default createGlobalStyle`
     .text-blue-light {
         color: ${$blueLight()};
     }
-    .text-yellow {
-        color: ${$yellow()};
-    }
-    .text-yellow-light {
-        color: ${$yellowLight()};
-    }
-    .text-green {
-        color: ${$green()};
-    }
-    .text-green-light {
-        color: ${$greenLight()};
-    }
     .text-red {
         color: ${$red()};
     }
@@ -144,18 +146,6 @@ export default createGlobalStyle`
     }
     .bg-blue-light {
         background: ${$blueLight()};
-    }
-    .bg-yellow {
-        background: ${$yellow()};
-    }
-    .bg-yellow-light {
-        background: ${$yellowLight()};
-    }
-    .bg-green {
-        background: ${$green()};
-    }
-    .bg-green-light {
-        background: ${$greenLight()};
     }
     .bg-red {
         background: ${$red()};
