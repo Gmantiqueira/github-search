@@ -24,9 +24,9 @@ function Home() {
             });
 
             if (page === 1) {
-                setUsers(users);
+                setUsers(data.items);
             } else {
-                setUsers([...users, data.items]);
+                setUsers([...users, ...data.items]);
             }
 
             setLoadingPages(false);
@@ -57,7 +57,8 @@ function Home() {
         if (infiniteScroll.current) {
             infiniteScroll.current.addEventListener(
                 'scroll',
-                async function () {
+                function () {
+                    console.log('teste')
                     if (
                         this.scrollTop + this.clientHeight >=
                             this.scrollHeight &&
@@ -84,7 +85,7 @@ function Home() {
                 {loading ? (
                     <Loader />
                 ) : (
-                    users.map((user) => <Card user={user} />)
+                    users.map((user) => <Card user={user} key={user.id}/>)
                 )}
             </UsersList>
             {loadingPages && <Loader />}

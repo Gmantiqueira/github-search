@@ -6,7 +6,8 @@ export const Container = styled.main`
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1;
+    height: auto;
     padding: 0 16px;
 
     @media screen and (min-width: 992px) {
@@ -17,9 +18,9 @@ export const Container = styled.main`
 export const InputWrapper = styled.div`
     align-items: flex-end;
     display: flex;
-    height: ${({ isSearching }) => (isSearching ? '208px' : '100%')};
+    min-height: ${({ isSearching }) => (isSearching ? '208px' : '100%')};
 
-    transition: height ease-out 0.5s;
+    transition: min-height ease-out 0.5s;
 `;
 
 export const SearchInput = styled.input`
