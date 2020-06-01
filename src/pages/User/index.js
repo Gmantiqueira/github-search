@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import DataCount from '@/components/DataCount';
 import Loader from '@/components/Loader';
+import RepositoryList from './RepositoryList'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
@@ -67,7 +68,7 @@ function User() {
                 </CardWrapper>
             </Profile>
 
-            <Loader />
+            <RepositoryList />
         </Container>
     );
 }
