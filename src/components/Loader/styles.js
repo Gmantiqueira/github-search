@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { $blue } from '@/styles/colors';
 
 export const Wrapper = styled.div`
-    margin: 0 auto;
+    height: 16px;
+    margin: auto;
     width: 70px;
     text-align: center;
 
