@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { $grayDark, $yellow } from '@/styles/colors';
+import { $blue, $gray, $grayDark, $yellow } from '@/styles/colors';
 
 export const Container = styled.div`
     display: flex;
@@ -38,10 +38,19 @@ export const Stars = styled.div`
 
 export const Description = styled.div`
     display: flex;
+    flex-direction: column;
     margin-top: 40px;
     width: 100%;
-    > * {
+    h3 {
         line-height: 1.5;
+    }
+    button {
+        font-size: 24px;
+        font-weight: 500;
+        margin-top: 32px;
+        svg {
+            margin-right: 16px;
+        }
     }
 `;
 
@@ -53,6 +62,41 @@ export const DateWrapper = styled.div`
 
 export const InfoWrapper = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    margin-bottom: 40px;
     width: 100%;
+`;
+
+export const Actions = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    width: 100%;
+`;
+
+export const GoBack = styled.div`
+align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    > div {
+        align-items: center;
+        background-color: ${$blue()};
+        border-radius: 50%;
+        display: flex;
+        height: 32px;
+        justify-content: center;
+        margin-right: 8px;
+        width: 32px;
+
+        transition: all ease .2s;
+
+        svg.fa-angle-left {
+            color: ${$gray()};
+            height: 20px;
+            margin-right: 2px;
+            transition: all ease .2s;
+            width: auto;
+        }
+    }
 `;

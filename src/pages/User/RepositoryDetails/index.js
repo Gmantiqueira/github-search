@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import {format} from 'date-fns';
 
 import DataCount from '@/components/DataCount';
 import Loader from '@/components/Loader';
@@ -8,13 +9,15 @@ import api from '@/services/api';
 import numFormatter from '@/utils/numFormatter';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faExternalLinkAlt, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
 import {
+    Actions,
     Container,
     DateWrapper,
     Description,
     Divisor,
+    GoBack,
     Header,
     InfoWrapper,
     Stars,
@@ -42,6 +45,10 @@ function RepositoryDetails({ username, reponame, toggleError }) {
         getRepository();
     }, [getRepository]);
 
+    function GoBackHandler() {
+        console.log('goback')
+    }
+
     return loading ? (
         <Loader />
     ) : (
@@ -61,24 +68,37 @@ function RepositoryDetails({ username, reponame, toggleError }) {
                         'Interface que utiliza a API do Github para buscar usuários e mostrar seus respectivos dados.'
                     }
                 </h3>
+                <a target="_blank" rel="noopener noreferrer" href={repository.html_url}>
+                    <button className="bg-blue text-blue-light">
+                        <FontAwesomeIcon icon={faExternalLinkAlt} /> See on GitHub
+                    </button>
+                </a>
             </Description>
             <Divisor />
             <DateWrapper>
-                <DataCount label="Created at" data={'27/06/2017'} />
-                <DataCount label="Last update" data={'27/05/2020'} />
-                <DataCount label="Last push" data={'27/09/2019'} />
+                <DataCount label="Created at" data={format(new Date(repository.created_at), 'dd/MM/yyyy')} />
+                <DataCount label="Last update" data={format(new Date(repository.updated_at), 'dd/MM/yyyy')} />
+                <DataCount label="Last push" data={format(new Date(repository.pushed_at), 'dd/MM/yyyy')} />
             </DateWrapper>
             <Divisor />
             <InfoWrapper>
-                <DataCount label="Language" data={'JavaScript'} />
-                <DataCount label="Forks" data={63} />
-                <DataCount label="Watchers" data={68550} />
+                <DataCount label="Language" data={repository.language} />
+                <DataCount label="Forks" data={repository.forks_count} />
+                <DataCount label="Watchers" data={repository.watchers_count} />
             </InfoWrapper>
             <InfoWrapper>
-                <DataCount label="Issues" data={466} />
-                <DataCount label="Subscribers" data={59} />
-                <DataCount label="HomePage" data={'Click here!'} link />
+                <DataCount label="Issues" data={repository.open_issues_count} />
+                <DataCount label="Subscribers" data={repository.subscribers_count} />
+                <DataCount label="HomePage" data={repository.homepage ? 'Click here!' : 'N/A'} link={repository.homepage || undefined} />
             </InfoWrapper>
+            <Actions>
+                <GoBack onClick={GoBackHandler}>
+                    <div>
+                        <FontAwesomeIcon icon={faAngleLeft} size={16}/>
+                    </div>
+                    <h3 className="text-blue medium">Go back to repositories</h3>
+                </GoBack>
+            </Actions>
         </Container>
     );
 }
