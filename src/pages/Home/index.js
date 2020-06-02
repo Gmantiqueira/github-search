@@ -26,7 +26,7 @@ function Home() {
             if (page === 1) {
                 setUsers(data.items);
             } else {
-                setUsers([...users, ...data.items]);
+                setUsers((userArray) => [...userArray, ...data.items]);
             }
 
             setLoadingPages(false);
@@ -55,20 +55,16 @@ function Home() {
 
     useEffect(() => {
         if (infiniteScroll.current) {
-            infiniteScroll.current.addEventListener(
-                'scroll',
-                function () {
-                    console.log('teste')
-                    if (
-                        this.scrollTop + this.clientHeight >=
-                            this.scrollHeight &&
-                        !loadingPages
-                    ) {
-                        setLoadingPages(true);
-                        setPage((old) => old + 1);
-                    }
+            infiniteScroll.current.addEventListener('scroll', function () {
+                console.log('teste');
+                if (
+                    this.scrollTop + this.clientHeight >= this.scrollHeight &&
+                    !loadingPages
+                ) {
+                    setLoadingPages(true);
+                    setPage((old) => old + 1);
                 }
-            );
+            });
         }
     }, [loadingPages]);
 
@@ -85,7 +81,7 @@ function Home() {
                 {loading ? (
                     <Loader />
                 ) : (
-                    users.map((user) => <Card user={user} key={user.id}/>)
+                    users.map((user) => <Card user={user} key={user.id} />)
                 )}
             </UsersList>
             {loadingPages && <Loader />}
