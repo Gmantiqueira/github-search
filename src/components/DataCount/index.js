@@ -5,17 +5,15 @@ import numFormatter from '@/utils/numFormatter';
 
 import { CountWrapper } from './styles';
 
-function DataCount({ label, data }) {
-    const dataFormat = data
-        ? typeof data === 'number' || parseInt(data)
-            ? numFormatter(data)
-            : data
-        : 'N/A';
-
+function DataCount({ label, data, link }) {
     return (
         <CountWrapper>
             <h3 className="text-gray-dark center">{label}</h3>
-            <h2 className="text-blue center regular">{dataFormat}</h2>
+            {link ? (
+                <a href={link} target="_blank" rel="noopener noreferrer">
+                    <h2 className="text-blue center regular">{data}</h2>
+                </a>
+            ) : <h2 className="text-blue center regular">{data}</h2>}
         </CountWrapper>
     );
 }
@@ -23,6 +21,11 @@ function DataCount({ label, data }) {
 DataCount.propTypes = {
     label: PropTypes.string.isRequired,
     data: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    link: PropTypes.string,
+};
+
+DataCount.defaultProps = {
+    link: '',
 };
 
 export default DataCount;
