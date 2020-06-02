@@ -13,6 +13,9 @@ export const $blue = (alpha = 100, lightness) =>
 export const $blueLight = (alpha = 100, lightness) =>
     `hsla(210, 100%, ${lightness || 97}%, ${alpha}%)`;
 
+export const $yellow = (alpha = 100, lightness) =>
+    `hsla(46, 100%, ${lightness || 62}%, ${alpha}%)`;
+
 export const $red = (alpha = 100, lightness) =>
     `hsla(354, 66%, ${lightness || 54}%, ${alpha}%)`;
 
