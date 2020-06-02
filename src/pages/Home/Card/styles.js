@@ -52,9 +52,3 @@ export const CardWrapper = styled.div`
         margin-bottom: 32px;
     }
 `;
-
-export const Numbers = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-bottom: 24px;
-`;

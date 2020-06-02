@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import DataCount from '@/components/DataCount';
 
-import { Action, BlueLine, CardWrapper, Numbers } from './styles';
+import { Action, BlueLine, CardWrapper } from './styles';
 
-function Card({ user, loading }) {
-    const { avatar_url, bio, email, followers, following, login, name } = user;
+function Card({ user }) {
+    const { avatar_url, login, name } = user;
 
     return (
         <CardWrapper className="bg-blue-light">
@@ -21,16 +21,8 @@ function Card({ user, loading }) {
                 />
             </div>
             <h2 className="center medium">{name || login}</h2>
-            {email && <p className="center bold">{email}</p>}
-            {(followers || following) && (
-                <Numbers>
-                    <DataCount label="Followers" data={followers} />
-                    <DataCount label="Following" data={following} />
-                </Numbers>
-            )}
-            {bio && <h3 className="text-gray-dark regular">{bio}</h3>}
             <BlueLine />
-            <Link to={`/user/${login}`}>
+            <Link to={`/${login}`}>
                 <Action className="text-blue">View Profile</Action>
             </Link>
         </CardWrapper>
@@ -38,12 +30,10 @@ function Card({ user, loading }) {
 }
 
 Card.propTypes = {
-    loading: PropTypes.bool,
     user: PropTypes.shape(),
 };
 
 Card.defaultProps = {
-    loading: false,
     user: {},
 };
 
