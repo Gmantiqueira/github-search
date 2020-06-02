@@ -1,32 +1,168 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+
+import api from '@/services/api';
+import numFormatter from '@/utils/numFormatter';
+
+import Loader from '@/components/Loader';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faStar } from '@fortawesome/free-solid-svg-icons';
 
-import { Container, Filters, Table, THeader, TRow} from './styles';
+import {
+    Container,
+    CustomSelect,
+    Filters,
+    Scroll,
+    Table,
+    THeader,
+    TRow,
+} from './styles';
 
-function RepositoryList() {
-  return (
-      <Container>
-          <Filters>
-              <span></span>
-              <span></span>
-          </Filters>
-          <Table>
-              <THeader>
-                  <h3 className="text-gray-dark">Name</h3>
-                  <h3 className="text-gray-dark">Language</h3>
-                  <h3 className="text-gray-dark">Stars</h3>
-              </THeader>
-              <TRow>
-                  <h3 className="text-gray-dark">github-search</h3>
-                  <h3 className="text-gray-dark">JavaScript</h3>
-                  <h3 className="text-gray-dark">2.1k</h3>
-                  <FontAwesomeIcon icon={faAngleRight} size="2x"/>
-              </TRow>
-          </Table>
-      </Container>
-  );
+const typeOptions = [
+    { value: 'all', label: 'All' },
+    { value: 'owner', label: 'Owner' },
+    { value: 'member', label: 'Member' },
+];
+
+const sortOptions = [
+    { value: 'created', label: 'Created' },
+    { value: 'updated', label: 'Updated' },
+    { value: 'pushed', label: 'Pushed' },
+    { value: 'full_name', label: 'Name' },
+];
+
+const directionOptions = [
+    { value: 'asc', label: 'Upward' },
+    { value: 'desc', label: 'Downward' },
+];
+
+function RepositoryList({ history, username, toggleError }) {
+    const infiniteScroll = useRef();
+
+    const [repositories, setRepositories] = useState([]);
+
+    const [type, setType] = useState('');
+    const [sort, setSort] = useState('');
+    const [direction, setDirection] = useState('');
+
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [loadingPages, setLoadingPages] = useState(false);
+
+    function loadRepository(reponame) {
+        history.push(`/${username}/${reponame}`);
+    }
+
+    const getRepositories = useCallback(async () => {
+        try {
+            const { data } = await api.get(`users/${username}/repos`, {
+                params: { page, per_page: 30, type, sort, direction },
+            });
+
+            if (data.length === 0 && page === 2) {
+                setPage((old) => old - 1);
+            }
+
+            if (page === 1) {
+                setRepositories(data);
+            } else {
+                setRepositories((userArray) => [...userArray, ...data]);
+            }
+
+            toggleError(false);
+            setLoadingPages(false);
+            setLoading(false);
+        } catch (err) {
+            toggleError(true);
+            setLoadingPages(false);
+            setLoading(false);
+        }
+    }, [type, sort, direction, page, username, toggleError]);
+
+    useEffect(() => {
+        getRepositories();
+    }, [getRepositories]);
+
+    useEffect(() => {
+        if (infiniteScroll.current) {
+            infiniteScroll.current.addEventListener('scroll', function () {
+                if (
+                    this.scrollTop + this.clientHeight >= this.scrollHeight &&
+                    !loadingPages
+                ) {
+                    setLoadingPages(true);
+                    setPage((old) => old + 1);
+                }
+            });
+        }
+    }, [loadingPages]);
+
+    return loading ? (
+        <Loader />
+    ) : (
+        <Container>
+            <Filters>
+                <CustomSelect
+                    classNamePrefix="react-select"
+                    isSearchable={false}
+                    name="type"
+                    onChange={({ value }) => setType(value)}
+                    options={typeOptions}
+                    placeholder="Type"
+                />
+                <CustomSelect
+                    classNamePrefix="react-select"
+                    isSearchable={false}
+                    name="sort"
+                    onChange={({ value }) => setSort(value)}
+                    options={sortOptions}
+                    placeholder="Sort by"
+                />
+                <CustomSelect
+                    classNamePrefix="react-select"
+                    isSearchable={false}
+                    name="direction"
+                    onChange={({ value }) => setDirection(value)}
+                    options={directionOptions}
+                    placeholder="Direction"
+                />
+            </Filters>
+            <Table>
+                <THeader>
+                    <h3 className="text-gray-dark">Name</h3>
+                    <h3 className="text-gray-dark">Language</h3>
+                    <h3 className="text-gray-dark">Stars</h3>
+                </THeader>
+                <Scroll ref={infiniteScroll}>
+                    {loading ? (
+                        <Loader />
+                    ) : (
+                        repositories.map(
+                            ({ name, language, stargazers_count }) => (
+                                <TRow onClick={() => loadRepository(name)}>
+                                    <p className="text-gray-dark">{name}</p>
+                                    <p className="text-gray-dark">{language}</p>
+                                    <p className="text-gray-dark">
+                                        <FontAwesomeIcon icon={faStar} />
+                                        {numFormatter(stargazers_count)}
+                                    </p>
+                                    <FontAwesomeIcon
+                                        icon={faAngleRight}
+                                        size="2x"
+                                    />
+                                </TRow>
+                            )
+                        )
+                    )}
+                </Scroll>
+            </Table>
+        </Container>
+    );
 }
+
+RepositoryList.propTypes = {
+    username: PropTypes.string.isRequired,
+};
 
 export default RepositoryList;
