@@ -74,11 +74,7 @@ function RepositoryDetails({
                 </Stars>
             </Header>
             <Description>
-                <p>
-                    {
-                        'Interface que utiliza a API do Github para buscar usuários e mostrar seus respectivos dados.'
-                    }
-                </p>
+                <p>{repository.description}</p>
             </Description>
             <Divisor />
             <DateWrapper>
@@ -102,6 +98,7 @@ function RepositoryDetails({
                 <DataCount label="Issues" data={repository.open_issues_count} />
             </InfoWrapper>
             <Actions>
+                <span className="divisor" />
                 <GoBack onClick={GoBackHandler}>
                     <div>
                         <FontAwesomeIcon icon={faAngleLeft} />

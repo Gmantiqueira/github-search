@@ -22,7 +22,7 @@ function Card({ user }) {
             {user.bio && <h3 className="text-gray-dark regular">{user.bio}</h3>}
             <a target="_blank" rel="noopener noreferrer" href={user.html_url}>
                 <button className="bg-blue text-blue-light">
-                    <FontAwesomeIcon icon={faExternalLinkAlt} /> See on GitHub
+                    <FontAwesomeIcon icon={faExternalLinkAlt} /> About me
                 </button>
             </a>
         </CardWrapper>
