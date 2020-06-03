@@ -20,7 +20,7 @@ function Card({ user }) {
                 <DataCount label="Followers" data={user.followers} />
                 <DataCount label="Following" data={user.following} />
             </Numbers>
-            {user.bio && <h3 className="text-gray-dark">{user.bio}</h3>}
+            {user.bio && <h3 className="text-gray-dark regular">{user.bio}</h3>}
             <a target="_blank" rel="noopener noreferrer" href={user.html_url}>
                 <button className="bg-blue text-blue-light">
                     <FontAwesomeIcon icon={faExternalLinkAlt} /> See on GitHub

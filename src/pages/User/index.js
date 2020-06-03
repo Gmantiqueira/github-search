@@ -46,6 +46,7 @@ function User({ history, match }) {
     ) : (
         <Container className="bg-gray">
             <Profile>{loading ? <Loader /> : <Card user={user} />}</Profile>
+            <span className="divisor" />
 
             {isDetailsVisible ? (
                 <RepositoryDetails

@@ -9,7 +9,7 @@ export const CardWrapper = styled.div`
     max-width: 400px;
     width: 100%;
 
-    @media screen and (min-width: 1280px) {
+    @media screen and (min-width: 1279px) {
         margin-right: 64px;
     }
 
@@ -45,7 +45,7 @@ export const CardWrapper = styled.div`
         svg {
             margin-right: 16px;
         }
-        @media screen and (min-width: 1280px) {
+        @media screen and (min-width: 1279px) {
             margin: 24px auto 0;
         }
     }

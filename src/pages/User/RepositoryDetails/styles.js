@@ -7,7 +7,7 @@ export const Container = styled.div`
     padding: 16px;
     width: 100%;
 
-    @media screen and (min-width: 1280px) {
+    @media screen and (min-width: 1279px) {
         padding: 32px 64px 0;
     }
 `;
@@ -48,18 +48,47 @@ export const Description = styled.div`
 
 export const DateWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     width: 100%;
+
+    > div {
+        margin: 0 auto;
+        margin-bottom: 24px;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+        > div {
+            margin: 0;
+        }
+    }
 `;
 
 export const InfoWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+
     > div {
-        margin: 0 16px 32px;
-        width: 25%;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+        > div {
+            margin: 0 16px 32px;
+            width: 25%;
+        }
     }
 `;
 

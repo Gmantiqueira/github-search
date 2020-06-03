@@ -49,7 +49,7 @@ function RepositoryDetails({
             toggleError(true);
             setLoading(false);
         }
-    }, [username]);
+    }, [reponame, username, toggleError]);
 
     useEffect(() => {
         getRepository();
@@ -135,5 +135,13 @@ function RepositoryDetails({
         </Container>
     );
 }
+
+RepositoryDetails.propTypes = {
+    history: PropTypes.shape().isRequired,
+    username: PropTypes.string.isRequired,
+    reponame: PropTypes.string.isRequired,
+    toggleDetails: PropTypes.func.isRequired,
+    toggleError: PropTypes.func.isRequired,
+};
 
 export default RepositoryDetails;

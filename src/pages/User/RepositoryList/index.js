@@ -82,7 +82,10 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
     }, [type, sort, direction, page, username, toggleError]);
 
     useEffect(() => {
-        console.log(page);
+        setPage(1);
+    }, [type, sort, direction]);
+
+    useEffect(() => {
         getRepositories();
     }, [getRepositories]);
 
@@ -165,7 +168,10 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
 }
 
 RepositoryList.propTypes = {
+    history: PropTypes.shape().isRequired,
     username: PropTypes.string.isRequired,
+    toggleDetails: PropTypes.func.isRequired,
+    toggleError: PropTypes.func.isRequired,
 };
 
 export default RepositoryList;
