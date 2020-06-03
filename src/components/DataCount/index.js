@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import numFormatter from '@/utils/numFormatter';
-
 import { CountWrapper } from './styles';
 
 function DataCount({ label, data, link }) {
@@ -11,9 +9,11 @@ function DataCount({ label, data, link }) {
             <h3 className="text-gray-dark center">{label}</h3>
             {link ? (
                 <a href={link} target="_blank" rel="noopener noreferrer">
-                    <h2 className="text-blue center regular">{data}</h2>
+                    <h3 className="text-blue center regular">{data}</h3>
                 </a>
-            ) : <h2 className="text-blue center regular">{data}</h2>}
+            ) : (
+                <h3 className="text-blue center regular">{data}</h3>
+            )}
         </CountWrapper>
     );
 }
