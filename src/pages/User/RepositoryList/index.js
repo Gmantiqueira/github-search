@@ -71,7 +71,7 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
                 setHasMoreData(false);
             }
 
-            if (page === 1) {
+            if (page === 1 && sort === '') {
                 const starsSorted = data.sort((a, b) => {
                     return b.stargazers_count - a.stargazers_count;
                 });
@@ -107,7 +107,6 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
                     !loadingPages &&
                     hasMoreData
                 ) {
-                    console.log('fim do scroll');
                     setLoadingPages(true);
                     setPage((old) => old + 1);
                 }
