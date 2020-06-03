@@ -17,7 +17,7 @@ function User({ history, match }) {
     const [user, setUser] = useState({});
 
     const [isDetailsVisible, toggleDetails] = useState(Boolean(reponame));
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const getUser = useCallback(async () => {
         try {
@@ -41,7 +41,7 @@ function User({ history, match }) {
         <Loader />
     ) : error ? (
         <ErrorScreen>
-            <h1>Falha no servidor</h1>
+            <h1>Internal Server Error</h1>
         </ErrorScreen>
     ) : (
         <Container className="bg-gray">

@@ -8,14 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Card({ user }) {
-    console.log(user);
     return (
         <CardWrapper>
             <div className="image-wrapper">
                 <img src={user.avatar_url} alt={user.name} />
             </div>
             <h2 className="center medium">{user.name}</h2>
-            {user.email && <p className="center bold">{user.email}</p>}
+            <p className="center bold">{user.email || ''}</p>
             <Numbers>
                 <DataCount label="Followers" data={user.followers} />
                 <DataCount label="Following" data={user.following} />
