@@ -10,20 +10,24 @@ function Card({ user }) {
 
     return (
         <CardWrapper className="bg-blue-light">
-            <div className="image-wrapper">
-                <img
-                    src={
-                        avatar_url ||
-                        'https://avatars3.githubusercontent.com/u/42946693?s=460&u=6ca5a72f5091772acd05e48ee03fd032064ef515&v=4'
-                    }
-                    alt={name}
-                />
+            <div>
+                <div className="image-wrapper">
+                    <img
+                        src={
+                            avatar_url ||
+                            'https://avatars3.githubusercontent.com/u/42946693?s=460&u=6ca5a72f5091772acd05e48ee03fd032064ef515&v=4'
+                        }
+                        alt={name}
+                    />
+                </div>
+                <h2 className="center medium">{name || login}</h2>
             </div>
-            <h2 className="center medium">{name || login}</h2>
-            <BlueLine />
-            <Link to={`/${login}`}>
-                <Action className="text-blue">View Profile</Action>
-            </Link>
+            <div>
+                <BlueLine />
+                <Link to={`/${login}`}>
+                    <Action className="text-blue">View Profile</Action>
+                </Link>
+            </div>
         </CardWrapper>
     );
 }
