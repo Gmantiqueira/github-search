@@ -66,7 +66,10 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
             }
 
             if (page === 1) {
-                setRepositories(data);
+                const starsSorted = data.sort((a, b) => {
+                    return b.stargazers_count - a.stargazers_count;
+                })
+                setRepositories(starsSorted);
             } else {
                 setRepositories((userArray) => [...userArray, ...data]);
             }
@@ -90,18 +93,19 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
     }, [getRepositories]);
 
     useEffect(() => {
-        if (infiniteScroll.current) {
+        if (!loading && infiniteScroll.current) {
             infiniteScroll.current.addEventListener('scroll', function () {
                 if (
                     this.scrollTop + this.clientHeight >= this.scrollHeight &&
                     !loadingPages
                 ) {
+                    console.log('fim do scroll')
                     setLoadingPages(true);
                     setPage((old) => old + 1);
                 }
             });
         }
-    }, [loadingPages]);
+    }, [loading, loadingPages]);
 
     return loading ? (
         <Loader />
@@ -144,8 +148,8 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
                         <Loader />
                     ) : (
                         repositories.map(
-                            ({ name, language, stargazers_count }) => (
-                                <TRow onClick={() => loadRepository(name)}>
+                            ({ id, name, language, stargazers_count }) => (
+                                <TRow key={id} onClick={() => loadRepository(name)}>
                                     <p className="text-gray-dark">{name}</p>
                                     <p className="text-gray-dark">{language}</p>
                                     <p className="text-gray-dark">
@@ -160,7 +164,11 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
                             )
                         )
                     )}
-                    {loadingPages && <Loader />}
+                    {loadingPages && (
+                        <div>
+                            <Loader />
+                        </div>
+                    )}
                 </Scroll>
             </Table>
         </Container>
