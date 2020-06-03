@@ -56,7 +56,7 @@ function RepositoryDetails({
     }, [getRepository]);
 
     function GoBackHandler() {
-        history.goBack();
+        history.push(`/${username}`);
         toggleDetails(false);
     }
 
@@ -99,17 +99,7 @@ function RepositoryDetails({
             <InfoWrapper>
                 <DataCount label="Language" data={repository.language} />
                 <DataCount label="Forks" data={repository.forks_count} />
-                <DataCount label="Watchers" data={repository.watchers_count} />
                 <DataCount label="Issues" data={repository.open_issues_count} />
-                <DataCount
-                    label="Subscribers"
-                    data={repository.subscribers_count}
-                />
-                <DataCount
-                    label="HomePage"
-                    data={repository.homepage ? 'Click here!' : 'N/A'}
-                    link={repository.homepage || undefined}
-                />
             </InfoWrapper>
             <Actions>
                 <GoBack onClick={GoBackHandler}>

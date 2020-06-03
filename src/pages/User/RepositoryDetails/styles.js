@@ -49,7 +49,7 @@ export const Description = styled.div`
 export const DateWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
 
     > div {
@@ -94,15 +94,21 @@ export const InfoWrapper = styled.div`
 
 export const Actions = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin-top: 16px;
     width: 100%;
     button {
         font-size: 24px;
         font-weight: 500;
+        margin: 0 auto;
         svg {
             margin-right: 16px;
         }
+    }
+
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
     }
 `;
 
@@ -110,6 +116,7 @@ export const GoBack = styled.div`
     align-items: center;
     cursor: pointer;
     display: flex;
+    margin: 0 auto;
     justify-content: space-between;
     > div {
         align-items: center;
