@@ -60,7 +60,7 @@ export const DateWrapper = styled.div`
         }
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1279px) {
         flex-direction: row;
         > div {
             margin: 0;
@@ -83,7 +83,7 @@ export const InfoWrapper = styled.div`
         }
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1279px) {
         flex-direction: row;
         > div {
             margin: 0 16px 32px;
@@ -101,14 +101,29 @@ export const Actions = styled.div`
     button {
         font-size: 24px;
         font-weight: 500;
-        margin: 0 auto;
+        margin: 0 auto 32px;
         svg {
             margin-right: 16px;
         }
     }
 
-    @media screen and (min-width: 768px) {
+    .divisor {
+        background-color: ${$grayDark(60)};
+        display: block;
+        height: 1px;
+        margin: 40px auto 32px;
+        padding: 0 64px;
+        width: calc(100% - 128px);
+    }
+
+    @media screen and (min-width: 1279px) {
         flex-direction: row;
+        button {
+            margin: 0;
+        }
+        .divisor {
+            display: none;
+        }
     }
 `;
 
@@ -116,11 +131,12 @@ export const GoBack = styled.div`
     align-items: center;
     cursor: pointer;
     display: flex;
-    margin: 0 auto;
-    justify-content: space-between;
+    justify-content: center;
+    order: 2;
     > div {
         align-items: center;
         background-color: ${$blue()};
+        border: 1px solid transparent;
         border-radius: 50%;
         display: flex;
         height: 32px;
@@ -136,6 +152,14 @@ export const GoBack = styled.div`
             margin-right: 2px;
             transition: all ease 0.2s;
             width: auto;
+        }
+
+        &:hover {
+            background-color: ${$gray()};
+            border-color: ${$blue()};
+            svg.fa-angle-left {
+                color: ${$blue()};
+            }
         }
     }
 `;

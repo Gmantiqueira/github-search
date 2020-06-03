@@ -53,6 +53,9 @@ export const THeader = styled.div`
 `;
 
 export const Scroll = styled.div`
+    .loader-wrapper {
+        margin: 32px auto;
+    }
     @media screen and (min-width: 768px) {
         max-height: 480px;
         overflow: hidden;
