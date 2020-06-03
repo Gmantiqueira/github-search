@@ -47,6 +47,8 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
     const [direction, setDirection] = useState('');
 
     const [page, setPage] = useState(1);
+
+    const [hasMoreData, setHasMoreData] = useState(true);
     const [loading, setLoading] = useState(true);
     const [loadingPages, setLoadingPages] = useState(false);
 
@@ -55,20 +57,24 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
         toggleDetails(true);
     }
 
+    useEffect(() => {
+        setPage(1);
+    }, [type, sort, direction]);
+
     const getRepositories = useCallback(async () => {
         try {
             const { data } = await api.get(`users/${username}/repos`, {
                 params: { page, per_page: 30, type, sort, direction },
             });
 
-            if (data.length === 0 && page === 2) {
-                setPage((old) => old - 1);
+            if (data.length === 0) {
+                setHasMoreData(false);
             }
 
             if (page === 1) {
                 const starsSorted = data.sort((a, b) => {
                     return b.stargazers_count - a.stargazers_count;
-                })
+                });
                 setRepositories(starsSorted);
             } else {
                 setRepositories((userArray) => [...userArray, ...data]);
@@ -85,6 +91,7 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
     }, [type, sort, direction, page, username, toggleError]);
 
     useEffect(() => {
+        setHasMoreData(true);
         setPage(1);
     }, [type, sort, direction]);
 
@@ -97,15 +104,16 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
             infiniteScroll.current.addEventListener('scroll', function () {
                 if (
                     this.scrollTop + this.clientHeight >= this.scrollHeight &&
-                    !loadingPages
+                    !loadingPages &&
+                    hasMoreData
                 ) {
-                    console.log('fim do scroll')
+                    console.log('fim do scroll');
                     setLoadingPages(true);
                     setPage((old) => old + 1);
                 }
             });
         }
-    }, [loading, loadingPages]);
+    }, [hasMoreData, loading, loadingPages]);
 
     return loading ? (
         <Loader />
@@ -149,7 +157,10 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
                     ) : (
                         repositories.map(
                             ({ id, name, language, stargazers_count }) => (
-                                <TRow key={id} onClick={() => loadRepository(name)}>
+                                <TRow
+                                    key={id}
+                                    onClick={() => loadRepository(name)}
+                                >
                                     <p className="text-gray-dark">{name}</p>
                                     <p className="text-gray-dark">{language}</p>
                                     <p className="text-gray-dark">
@@ -165,7 +176,7 @@ function RepositoryList({ history, username, toggleDetails, toggleError }) {
                         )
                     )}
                     {loadingPages && (
-                        <div>
+                        <div className="loader-wrapper">
                             <Loader />
                         </div>
                     )}

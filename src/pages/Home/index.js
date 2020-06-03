@@ -11,6 +11,8 @@ function Home() {
     const [hasTyped, triggerTyped] = useState(false);
     const [loadingPages, setLoadingPages] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [hasMoreData, setHasMoreData] = useState(true);
+
     const [error, setError] = useState('');
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
@@ -23,6 +25,10 @@ function Home() {
             const { data } = await api.get('search/users', {
                 params: { q: search, page, per_page: 12 },
             });
+
+            if (!data.length) {
+                setHasMoreData(false);
+            }
 
             if (page === 1) {
                 if (!data.items.length) {
@@ -68,14 +74,16 @@ function Home() {
             infiniteScroll.current.addEventListener('scroll', function () {
                 if (
                     this.scrollTop + this.clientHeight >= this.scrollHeight &&
-                    !loadingPages && ! !loading
+                    !loadingPages &&
+                    !loading &&
+                    hasMoreData
                 ) {
                     setLoadingPages(true);
                     setPage((old) => old + 1);
                 }
             });
         }
-    }, [loadingPages]);
+    }, [hasMoreData, loading, loadingPages]);
 
     return (
         <Container ref={infiniteScroll} className="bg-gray-dark">
@@ -91,8 +99,10 @@ function Home() {
                 </div>
             </InputWrapper>
             <UsersList>
-                { users.map((user) => <Card user={user} key={user.id} />)}
-                { error && <h1 className="text-red">{error}</h1> }
+                {users.map((user) => (
+                    <Card user={user} key={user.id} />
+                ))}
+                {error && <h1 className="text-red">{error}</h1>}
             </UsersList>
             {loadingPages && <Loader />}
         </Container>
