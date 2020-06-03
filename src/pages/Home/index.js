@@ -11,6 +11,7 @@ function Home() {
     const [hasTyped, triggerTyped] = useState(false);
     const [loadingPages, setLoadingPages] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
@@ -24,6 +25,9 @@ function Home() {
             });
 
             if (page === 1) {
+                if (!data.items.length) {
+                    setError('No results');
+                }
                 setUsers(data.items);
             } else {
                 setUsers((userArray) => [...userArray, ...data.items]);
@@ -34,12 +38,18 @@ function Home() {
         } catch (err) {
             setLoadingPages(false);
             setLoading(false);
+            setError('Internal Server Error');
         }
     }, [page, search]);
 
     function searchHandler(value) {
+        setLoading(true);
         triggerTyped(true);
+        setPage(1);
         setSearch(value);
+        if (!value) {
+            setError('Please enter at least one character');
+        }
     }
 
     useEffect(() => {
@@ -56,10 +66,9 @@ function Home() {
     useEffect(() => {
         if (infiniteScroll.current) {
             infiniteScroll.current.addEventListener('scroll', function () {
-                console.log('teste');
                 if (
                     this.scrollTop + this.clientHeight >= this.scrollHeight &&
-                    !loadingPages
+                    !loadingPages && ! !loading
                 ) {
                     setLoadingPages(true);
                     setPage((old) => old + 1);
@@ -71,18 +80,19 @@ function Home() {
     return (
         <Container ref={infiniteScroll} className="bg-gray-dark">
             <InputWrapper isSearching={hasTyped}>
-                <SearchInput
-                    type="text"
-                    name="search"
-                    onKeyUp={(e) => searchHandler(e.target.value)}
-                />
+                <div>
+                    <SearchInput
+                        type="text"
+                        name="search"
+                        placeholder="Search for users"
+                        onKeyUp={(e) => searchHandler(e.target.value)}
+                    />
+                    {loading && <Loader />}
+                </div>
             </InputWrapper>
             <UsersList>
-                {loading ? (
-                    <Loader />
-                ) : (
-                    users.map((user) => <Card user={user} key={user.id} />)
-                )}
+                { users.map((user) => <Card user={user} key={user.id} />)}
+                { error && <h1 className="text-red">{error}</h1> }
             </UsersList>
             {loadingPages && <Loader />}
         </Container>

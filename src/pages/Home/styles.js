@@ -8,6 +8,8 @@ export const Container = styled.main`
     flex-direction: column;
     flex: 1;
     height: auto;
+    overflow: hidden;
+    overflow-y: auto;
     padding: 0 16px;
 
     @media screen and (min-width: 992px) {
@@ -18,9 +20,13 @@ export const Container = styled.main`
 export const InputWrapper = styled.div`
     align-items: flex-end;
     display: flex;
+    flex-direction: column;
     min-height: ${({ isSearching }) => (isSearching ? '208px' : '100%')};
 
     transition: min-height ease-out 0.5s;
+    div {
+        margin: auto;
+    }
 `;
 
 export const SearchInput = styled.input`
@@ -28,7 +34,7 @@ export const SearchInput = styled.input`
     max-width: 360px;
     width: 100%;
 
-    margin: auto;
+    margin-bottom: 32px;
     padding: 8px 24px;
 
     color: ${$grayDark()};
