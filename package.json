@@ -58,6 +58,7 @@
         "react-app-rewired": "^2.1.6"
     },
     "engines": {
-        "node": "12.6.0"
-     }
+        "node": "12.6.0",
+        "npm": "6.10.3"
+    }
 }
