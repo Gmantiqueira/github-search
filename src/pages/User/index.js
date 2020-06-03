@@ -52,12 +52,14 @@ function User({ history, match }) {
                     history={history}
                     username={username}
                     reponame={reponame}
+                    toggleDetails={toggleDetails}
                     toggleError={setError}
                 />
             ) : (
                 <RepositoryList
                     history={history}
                     username={username}
+                    toggleDetails={toggleDetails}
                     toggleError={setError}
                 />
             )}

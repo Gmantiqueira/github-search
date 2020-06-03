@@ -7,6 +7,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     padding: 16px;
+    width: 100%;
 
     @media screen and (min-width: 1280px) {
         flex-direction: row;
@@ -20,9 +21,11 @@ export const Profile = styled.div`
     display: flex;
     position: relative;
     padding: 16px;
+    width: 100%;
 
     @media screen and (min-width: 1280px) {
         border-right: 1px solid ${$blue()};
         padding: 0;
+        width: auto;
     }
 `;

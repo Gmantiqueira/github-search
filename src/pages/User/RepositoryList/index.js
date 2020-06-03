@@ -37,7 +37,7 @@ const directionOptions = [
     { value: 'desc', label: 'Downward' },
 ];
 
-function RepositoryList({ history, username, toggleError }) {
+function RepositoryList({ history, username, toggleDetails, toggleError }) {
     const infiniteScroll = useRef();
 
     const [repositories, setRepositories] = useState([]);
@@ -47,11 +47,12 @@ function RepositoryList({ history, username, toggleError }) {
     const [direction, setDirection] = useState('');
 
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [loadingPages, setLoadingPages] = useState(false);
 
     function loadRepository(reponame) {
         history.push(`/${username}/${reponame}`);
+        toggleDetails(true);
     }
 
     const getRepositories = useCallback(async () => {
@@ -81,6 +82,7 @@ function RepositoryList({ history, username, toggleError }) {
     }, [type, sort, direction, page, username, toggleError]);
 
     useEffect(() => {
+        console.log(page);
         getRepositories();
     }, [getRepositories]);
 
@@ -155,6 +157,7 @@ function RepositoryList({ history, username, toggleError }) {
                             )
                         )
                     )}
+                    {loadingPages && <Loader />}
                 </Scroll>
             </Table>
         </Container>

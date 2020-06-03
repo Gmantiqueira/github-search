@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 
 import DataCount from '@/components/DataCount';
 import Loader from '@/components/Loader';
@@ -9,7 +9,11 @@ import api from '@/services/api';
 import numFormatter from '@/utils/numFormatter';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faExternalLinkAlt, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+    faStar,
+    faExternalLinkAlt,
+    faAngleLeft,
+} from '@fortawesome/free-solid-svg-icons';
 
 import {
     Actions,
@@ -23,7 +27,13 @@ import {
     Stars,
 } from './styles';
 
-function RepositoryDetails({ username, reponame, toggleError }) {
+function RepositoryDetails({
+    history,
+    username,
+    reponame,
+    toggleDetails,
+    toggleError,
+}) {
     const [loading, setLoading] = useState(true);
     const [repository, setRepository] = useState([]);
 
@@ -46,7 +56,8 @@ function RepositoryDetails({ username, reponame, toggleError }) {
     }, [getRepository]);
 
     function GoBackHandler() {
-        console.log('goback')
+        history.goBack();
+        toggleDetails(false);
     }
 
     return loading ? (
@@ -54,50 +65,72 @@ function RepositoryDetails({ username, reponame, toggleError }) {
     ) : (
         <Container>
             <Header>
-                <h1>{'github-search'}</h1>
+                <h2>{repository.name}</h2>
                 <Stars>
-                    <h1>
+                    <h2>
                         <FontAwesomeIcon icon={faStar} />
-                        {numFormatter(315600)}
-                    </h1>
+                        {numFormatter(repository.stargazers_count)}
+                    </h2>
                 </Stars>
             </Header>
             <Description>
-                <h3>
+                <p>
                     {
                         'Interface que utiliza a API do Github para buscar usuários e mostrar seus respectivos dados.'
                     }
-                </h3>
-                <a target="_blank" rel="noopener noreferrer" href={repository.html_url}>
-                    <button className="bg-blue text-blue-light">
-                        <FontAwesomeIcon icon={faExternalLinkAlt} /> See on GitHub
-                    </button>
-                </a>
+                </p>
             </Description>
             <Divisor />
             <DateWrapper>
-                <DataCount label="Created at" data={format(new Date(repository.created_at), 'dd/MM/yyyy')} />
-                <DataCount label="Last update" data={format(new Date(repository.updated_at), 'dd/MM/yyyy')} />
-                <DataCount label="Last push" data={format(new Date(repository.pushed_at), 'dd/MM/yyyy')} />
+                <DataCount
+                    label="Created at"
+                    data={format(new Date(repository.created_at), 'dd/MM/yyyy')}
+                />
+                <DataCount
+                    label="Last update"
+                    data={format(new Date(repository.updated_at), 'dd/MM/yyyy')}
+                />
+                <DataCount
+                    label="Last push"
+                    data={format(new Date(repository.pushed_at), 'dd/MM/yyyy')}
+                />
             </DateWrapper>
             <Divisor />
             <InfoWrapper>
                 <DataCount label="Language" data={repository.language} />
                 <DataCount label="Forks" data={repository.forks_count} />
                 <DataCount label="Watchers" data={repository.watchers_count} />
-            </InfoWrapper>
-            <InfoWrapper>
                 <DataCount label="Issues" data={repository.open_issues_count} />
-                <DataCount label="Subscribers" data={repository.subscribers_count} />
-                <DataCount label="HomePage" data={repository.homepage ? 'Click here!' : 'N/A'} link={repository.homepage || undefined} />
+                <DataCount
+                    label="Subscribers"
+                    data={repository.subscribers_count}
+                />
+                <DataCount
+                    label="HomePage"
+                    data={repository.homepage ? 'Click here!' : 'N/A'}
+                    link={repository.homepage || undefined}
+                />
             </InfoWrapper>
             <Actions>
                 <GoBack onClick={GoBackHandler}>
                     <div>
-                        <FontAwesomeIcon icon={faAngleLeft} size={16}/>
+                        <FontAwesomeIcon icon={faAngleLeft} />
                     </div>
-                    <h3 className="text-blue medium">Go back to repositories</h3>
+                    <h3 className="text-blue medium">
+                        Go back to repositories
+                    </h3>
                 </GoBack>
+
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={repository.html_url}
+                >
+                    <button className="bg-blue text-blue-light">
+                        <FontAwesomeIcon icon={faExternalLinkAlt} /> See on
+                        GitHub
+                    </button>
+                </a>
             </Actions>
         </Container>
     );

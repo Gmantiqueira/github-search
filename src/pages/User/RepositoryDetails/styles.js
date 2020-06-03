@@ -41,16 +41,8 @@ export const Description = styled.div`
     flex-direction: column;
     margin-top: 40px;
     width: 100%;
-    h3 {
+    p {
         line-height: 1.5;
-    }
-    button {
-        font-size: 24px;
-        font-weight: 500;
-        margin-top: 32px;
-        svg {
-            margin-right: 16px;
-        }
     }
 `;
 
@@ -62,20 +54,31 @@ export const DateWrapper = styled.div`
 
 export const InfoWrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 40px;
     width: 100%;
+    > div {
+        margin: 0 16px 32px;
+        width: 25%;
+    }
 `;
 
 export const Actions = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-top: 24px;
+    margin-top: 16px;
     width: 100%;
+    button {
+        font-size: 24px;
+        font-weight: 500;
+        svg {
+            margin-right: 16px;
+        }
+    }
 `;
 
 export const GoBack = styled.div`
-align-items: center;
+    align-items: center;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -89,13 +92,13 @@ align-items: center;
         margin-right: 8px;
         width: 32px;
 
-        transition: all ease .2s;
+        transition: all ease 0.2s;
 
         svg.fa-angle-left {
             color: ${$gray()};
             height: 20px;
             margin-right: 2px;
-            transition: all ease .2s;
+            transition: all ease 0.2s;
             width: auto;
         }
     }
