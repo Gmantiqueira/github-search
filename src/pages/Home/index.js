@@ -23,7 +23,7 @@ function Home() {
     const getUsers = useCallback(async () => {
         try {
             const { data } = await api.get('search/users', {
-                params: { q: search, page, per_page: 12 },
+                params: { q: debounceSearch, page, per_page: 12 },
             });
 
             if (!data.length) {
@@ -46,15 +46,17 @@ function Home() {
             setLoading(false);
             setError('Internal Server Error');
         }
-    }, [page, search]);
+    }, [page, debounceSearch]);
 
     function searchHandler(value) {
+        setError('');
         setLoading(true);
         triggerTyped(true);
         setPage(1);
         setSearch(value);
         if (!value) {
             setError('Please enter at least one character');
+            setLoading(false);
         }
     }
 
