@@ -2,7 +2,7 @@
 
 Projeto que utiliza a API pública do GitHub para pesquisar usuários, listar seus repositórios e seus detalhes.
 
-['Clique aqui para visualizar a aplicação!'](https://gh-search-app.herokuapp.com/)
+[Clique aqui para visualizar a aplicação!](https://gh-search-app.herokuapp.com/)
 
 ### Principais tecnologias e conceitos utilizados
 
@@ -23,9 +23,10 @@ Para definição e criação de layout:
 
 ### Considerações sobre a usabilidade
 
+-   Para acessar os dados do usuário e/ou os dados de um repositório específico, você pode utilizar a própria URL, seguindo a estrutura: <code>/Gmantiqueira</code> ou <code>/Gmantiqueira/github-search</code>
+-   Foi criada uma validação para erros vindos do servidor. A API pública do GitHub aceita somente 60 requisições por hora, após isso ela retorna erros do servidor.
 -   Apesar da especificação de pesquisar somente "um usuário", preferi implementar a pesquisa de usuários para melhor usabilidade.
 -   Na listagem de repositórios, estava especificado que a ordenação deveria ser feita na ordem decrescente de número de estrelas. Porém, a API não retorna os dados com essa ordenação. Só foi possível a ordenação manual na primeira página, as páginas seguintes não manterão a ordenação de estrelas.
--   Foi criada uma validação para erros vindos do servidor. A API pública do GitHub aceita somente 60 requisições por hora, após isso ela retorna erros do servidor.
 -   Foi criada também uma página 404.
 
 ### Considerações sobre o projeto
