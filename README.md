@@ -2,6 +2,8 @@
 
 Projeto que utiliza a API pública do GitHub para pesquisar usuários, listar seus repositórios e seus detalhes.
 
+Toda estilização foi baseada no Styleguide do GitHub!
+
 [Clique aqui para visualizar a aplicação!](https://gh-search-app.herokuapp.com/)
 
 ### Principais tecnologias e conceitos utilizados
